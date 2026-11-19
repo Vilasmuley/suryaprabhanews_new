@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<title>सूर्यप्रभा - Upload Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  background: linear-gradient(135deg,#fff,#fdf5ef);
+  margin:0;
+  text-align:center;
+}
+
+.container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.logo {
+  width: 180px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.drop-zone {
+  border: 2px dashed #c0161c;
+  padding: 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  background:#faf7f4;
+  transition: 0.3s;
+}
+
+.drop-zone:hover {
+  background:#fdecea;
+}
+
+.preview {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.preview img {
+  width:100%;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
+
+button {
+  margin-top:20px;
+  padding:12px 30px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:#c0161c;
+  color:#fff;
+  cursor:pointer;
+}
+
+button:hover {
+  background:#8b0000;
+}
+
+.status {
+  margin-top:15px;
+  font-weight:600;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="../logo.png" class="logo" alt="दैनिक सूर्यप्रभा">
+
+<h2>आजचा अंक प्रकाशित करा</h2>
+
+<div class="drop-zone" onclick="fileInput.click()">
+  क्लिक करा किंवा फोटो ड्रॅग करा (8 images)
+</div>
+
+<input type="file" id="files" multiple accept="image/*" hidden>
+
+<div class="preview" id="preview"></div>
+
+<button onclick="upload()">पुढील पायरी पहा</button>
+
+<div class="status" id="status"></div>
+
+</div>
+
+<script>
+const fileInput = document.getElementById("files");
+const preview = document.getElementById("preview");
+
+fileInput.addEventListener("change", () => {
+  preview.innerHTML = "";
+  [...fileInput.files].forEach(file => {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    preview.appendChild(img);
+  });
+});
+
+async function upload() {
+  const files = fileInput.files;
+
+  if (files.length !== 8) {
+    alert("कृपया 8 फोटो निवडा");
+    return;
+  }
+
+  document.getElementById("status").innerHTML =
+    "पाने योग्य आहेत. ही वेबसाइट सुरक्षित static hosting वर आहे, त्यामुळे येथे थेट upload होत नाही. " +
+    "PowerShell मधून <b>scripts\\publish-issue.ps1</b> चालवा, नंतर GitHub वर push करा. संपूर्ण पद्धत README.md मध्ये आहे.";
+}
+</script>
+
+</body>
+</html>

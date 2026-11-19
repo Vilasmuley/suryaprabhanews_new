@@ -1,0 +1,19 @@
+{
+  "issues": [
+    {
+      "date": "2026-04-15",
+      "title": "दैनिक सूर्यप्रभा",
+      "edition": "वर्ष १७ · अंक ८८",
+      "pages": [
+        { "number": "१", "label": "मुखपृष्ठ", "image": "issues/2026-04-15/page1.jpg" },
+        { "number": "२", "label": "संमिश्र", "image": "issues/2026-04-15/page2.jpg" },
+        { "number": "३", "label": "जिल्हा", "image": "issues/2026-04-15/page3.jpg" },
+        { "number": "४", "label": "संपादकीय", "image": "issues/2026-04-15/page4.jpg" },
+        { "number": "५", "label": "संभाजीनगर", "image": "issues/2026-04-15/page5.jpg" },
+        { "number": "६", "label": "जालना", "image": "issues/2026-04-15/page6.jpg" },
+        { "number": "७", "label": "संमिश्र", "image": "issues/2026-04-15/page7.jpg" },
+        { "number": "८", "label": "शेवटचे पान", "image": "issues/2026-04-15/page8.jpg" }
+      ]
+    }
+  ]
+}
