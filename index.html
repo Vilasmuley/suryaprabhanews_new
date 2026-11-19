@@ -534,13 +534,18 @@ const FALLBACK_PAGES = [
 let PAGES = [];
 let currentIssue = { date: '2026-04-15', edition: 'वर्ष १७ · अंक ८८', pages: FALLBACK_PAGES };
 
-function marathiDate(dateValue) {
-  const date = new Date(dateValue + 'T12:00:00');
-  return new Intl.DateTimeFormat('mr-IN', { weekday:'long', day:'numeric', month:'long', year:'numeric' }).format(date);
+function indianToday() {
+  return new Intl.DateTimeFormat('mr-IN', {
+    timeZone: 'Asia/Kolkata',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(new Date());
 }
 
 function applyIssueDetails(issue) {
-  const dateText = marathiDate(issue.date);
+  const dateText = indianToday();
   document.getElementById('navDate').innerHTML = `<strong>${dateText.split(',')[0] || dateText}</strong>${dateText}`;
   document.getElementById('heroIssue').innerHTML = `महाराष्ट्राचा विश्वासू आवाज &nbsp;·&nbsp; <strong>${dateText}</strong>${issue.edition ? ` &nbsp;·&nbsp; ${issue.edition}` : ''}`;
   document.getElementById('pdfIssue').textContent = `${dateText}${issue.edition ? ' · ' + issue.edition : ''} · पाने ${PAGES.length}`;
