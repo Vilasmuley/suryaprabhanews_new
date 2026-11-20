@@ -180,6 +180,15 @@ body{
   display:flex;justify-content:center;gap:0;
   border-top:1px solid var(--border);border-bottom:3px solid var(--red);background:#fff;
 }
+.archive-section{max-width:960px;margin:0 auto;padding:52px 28px 60px;text-align:center}
+.archive-section[hidden]{display:none}
+.archive-section h2{font-size:24px;color:var(--ink);margin-bottom:8px}
+.archive-section p{font-size:13px;color:var(--gray);margin-bottom:23px}
+.archive-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;text-align:left}
+.archive-card{padding:12px;background:#fff;border:1px solid var(--border);border-radius:10px;cursor:pointer;box-shadow:var(--sh-sm);transition:.2s}
+.archive-card:hover{transform:translateY(-3px);border-color:var(--red);box-shadow:var(--sh-md)}
+.archive-card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:5px;margin-bottom:9px}
+.archive-date{font-size:12px;font-weight:700;color:var(--red)}
 .ii{text-align:center;padding:20px 38px;border-right:1px solid var(--border);flex:1;max-width:200px}
 .ii:last-child{border-right:none}
 .ii .n{font-size:30px;font-weight:800;color:var(--red);display:block;line-height:1;font-family:'Noto Sans Devanagari',sans-serif}
@@ -355,6 +364,7 @@ body{
   .ab-vals{grid-template-columns:1fr 1fr}
   .team-grid{grid-template-columns:repeat(2,1fr)}
   .pdf-grid{grid-template-columns:repeat(2,1fr);padding:24px 12px}
+  .archive-grid{grid-template-columns:repeat(2,1fr)}
   .info-strip{flex-wrap:wrap}
   .ii{min-width:44%;border-right:none;border-bottom:1px solid var(--border)}
   .nwrap img{width:96vw}
@@ -423,6 +433,12 @@ body{
     <div class="ii"><span class="n">५०,०००+</span><span class="l">वाचक</span></div>
     <div class="ii"><span class="n">बीड</span><span class="l">मुख्यालय</span></div>
   </div>
+
+  <section class="archive-section" id="archiveSection" hidden>
+    <h2>मागील अंक</h2>
+    <p>मागील १ महिन्यातील दैनिक सूर्यप्रभा अंक</p>
+    <div class="archive-grid" id="archiveGrid"></div>
+  </section>
 
   <footer class="footer">
     <div class="footer-logowrap">
@@ -533,6 +549,7 @@ const FALLBACK_PAGES = [
 ];
 let PAGES = [];
 let currentIssue = { date: '2026-04-15', edition: 'वर्ष १७ · अंक ८८', pages: FALLBACK_PAGES };
+let availableIssues = [];
 
 function indianToday() {
   return new Intl.DateTimeFormat('mr-IN', {
@@ -558,6 +575,7 @@ function renderIssue() {
   document.getElementById('pdfGrid').innerHTML = '';
   rp = 1; rs = 1;
   applyIssueDetails(currentIssue);
+  renderArchive();
 
 // Home grid
 const hg = document.getElementById('homeGrid');
@@ -613,6 +631,28 @@ PAGES.forEach((p,i) => {
     </div>`;
   pg.appendChild(c);
 });
+}
+
+function renderArchive() {
+  const section = document.getElementById('archiveSection');
+  const grid = document.getElementById('archiveGrid');
+  const olderIssues = availableIssues.filter(issue => issue.date !== currentIssue.date).slice(0, 30);
+  grid.innerHTML = '';
+  section.hidden = olderIssues.length === 0;
+  olderIssues.forEach(issue => {
+    const card = document.createElement('button');
+    card.type = 'button'; card.className = 'archive-card';
+    card.innerHTML = `<img src="${issue.pages[0].image}" alt="${issue.title || 'दैनिक सूर्यप्रभा'}"><div class="archive-date">${new Intl.DateTimeFormat('mr-IN',{timeZone:'Asia/Kolkata',day:'numeric',month:'long',year:'numeric'}).format(new Date(issue.date+'T12:00:00'))}</div>`;
+    card.onclick = () => openIssue(issue);
+    grid.appendChild(card);
+  });
+}
+
+function openIssue(issue) {
+  currentIssue = issue;
+  PAGES = issue.pages.map((page, index) => ({ num: page.number || String(index + 1), lbl: page.label || `पान ${index + 1}`, img: page.image }));
+  renderIssue();
+  showView('reader');
 }
 
 // Reader state
@@ -719,6 +759,7 @@ async function loadLatestIssue() {
     }
     if (!manifest) throw lastError;
     currentIssue = manifest.issues[0];
+    availableIssues = manifest.issues;
     PAGES = currentIssue.pages.map((page, index) => ({
       num: page.number || String(index + 1),
       lbl: page.label || `पान ${index + 1}`,

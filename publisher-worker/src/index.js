@@ -50,7 +50,27 @@ async function publishIssue(request, env, url) {
   }
 
   const issue = { date, title: 'दैनिक सूर्यप्रभा', edition: String(form.get('edition') || ''), pages };
-  const latest = { issues: [issue] };
+  const previous = await env.EPAPER_BUCKET.get('latest.json');
+  let existingIssues = [];
+  if (previous) {
+    try { existingIssues = (await previous.json()).issues || []; } catch { existingIssues = []; }
+  }
+  const cutoff = new Date();
+  cutoff.setUTCDate(cutoff.getUTCDate() - 30);
+  const cutoffDate = cutoff.toISOString().slice(0, 10);
+  const issues = [issue, ...existingIssues.filter(old => old.date !== date && old.date >= cutoffDate)].slice(0, 31);
+  const removedIssues = existingIssues.filter(old => !issues.some(kept => kept.date === old.date));
+  for (const old of removedIssues) {
+    const keys = (old.pages || []).map(page => new URL(page.image).pathname.slice(1));
+    if (keys.length) await env.EPAPER_BUCKET.delete(keys);
+  }
+  const priorSameDay = existingIssues.find(old => old.date === date);
+  if (priorSameDay) {
+    const newKeys = new Set(pages.map(page => new URL(page.image).pathname.slice(1)));
+    const staleKeys = (priorSameDay.pages || []).map(page => new URL(page.image).pathname.slice(1)).filter(key => !newKeys.has(key));
+    if (staleKeys.length) await env.EPAPER_BUCKET.delete(staleKeys);
+  }
+  const latest = { issues };
   await env.EPAPER_BUCKET.put('latest.json', JSON.stringify(latest), {
     httpMetadata: { contentType: 'application/json; charset=utf-8' }
   });
