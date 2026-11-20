@@ -696,13 +696,28 @@ document.getElementById('stage').addEventListener('wheel', e => {
 }, {passive:false});
 
 async function loadLatestIssue() {
+  const issueSources = [
+    'https://data.suryaprabhanews.com/latest.json',
+    'data/issues.json'
+  ];
   try {
-    const response = await fetch('data/issues.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error(`Issue manifest returned ${response.status}`);
-    const manifest = await response.json();
-    if (!Array.isArray(manifest.issues) || !manifest.issues[0] || !Array.isArray(manifest.issues[0].pages) || manifest.issues[0].pages.length !== 8) {
-      throw new Error('Issue manifest does not contain eight pages');
+    let manifest;
+    let lastError;
+    for (const source of issueSources) {
+      try {
+        const response = await fetch(source, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Issue manifest returned ${response.status}`);
+        const candidate = await response.json();
+        if (!Array.isArray(candidate.issues) || !candidate.issues[0] || !Array.isArray(candidate.issues[0].pages) || candidate.issues[0].pages.length !== 8) {
+          throw new Error('Issue manifest does not contain eight pages');
+        }
+        manifest = candidate;
+        break;
+      } catch (error) {
+        lastError = error;
+      }
     }
+    if (!manifest) throw lastError;
     currentIssue = manifest.issues[0];
     PAGES = currentIssue.pages.map((page, index) => ({
       num: page.number || String(index + 1),

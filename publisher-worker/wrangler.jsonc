@@ -1,0 +1,11 @@
+{
+  "name": "suryaprabha-publisher",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-20",
+  "r2_buckets": [
+    {
+      "binding": "EPAPER_BUCKET",
+      "bucket_name": "suryaprabha-epaper"
+    }
+  ]
+}
