@@ -180,15 +180,6 @@ body{
   display:flex;justify-content:center;gap:0;
   border-top:1px solid var(--border);border-bottom:3px solid var(--red);background:#fff;
 }
-.archive-section{max-width:960px;margin:0 auto;padding:52px 28px 60px;text-align:center}
-.archive-section[hidden]{display:none}
-.archive-section h2{font-size:24px;color:var(--ink);margin-bottom:8px}
-.archive-section p{font-size:13px;color:var(--gray);margin-bottom:23px}
-.archive-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;text-align:left}
-.archive-card{padding:12px;background:#fff;border:1px solid var(--border);border-radius:10px;cursor:pointer;box-shadow:var(--sh-sm);transition:.2s}
-.archive-card:hover{transform:translateY(-3px);border-color:var(--red);box-shadow:var(--sh-md)}
-.archive-card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:5px;margin-bottom:9px}
-.archive-date{font-size:12px;font-weight:700;color:var(--red)}
 .ii{text-align:center;padding:20px 38px;border-right:1px solid var(--border);flex:1;max-width:200px}
 .ii:last-child{border-right:none}
 .ii .n{font-size:30px;font-weight:800;color:var(--red);display:block;line-height:1;font-family:'Noto Sans Devanagari',sans-serif}
@@ -211,6 +202,23 @@ body{
 }
 .ptab:hover{background:var(--red-light);color:var(--red);border-color:var(--red)}
 .ptab.active{background:var(--red);color:#fff;border-color:var(--red)}
+.previous-editions-btn{
+  background:#fff;color:var(--red);border:1.5px solid rgba(192,22,28,.42);
+  border-radius:7px;padding:7px 13px;font-size:12.5px;font-weight:700;
+  cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0;
+  font-family:'Noto Sans Devanagari',sans-serif;
+}
+.previous-editions-btn:hover{background:var(--red);border-color:var(--red);color:#fff}
+.issue-picker{position:fixed;inset:0;z-index:3000;background:rgba(25,15,12,.54);padding:22px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.issue-picker[hidden]{display:none}
+.issue-picker-card{width:min(720px,100%);max-height:min(82vh,680px);overflow:auto;background:#fff;border-radius:16px;box-shadow:0 22px 70px rgba(0,0,0,.32);padding:25px;position:relative}
+.issue-picker-card h2{font-size:22px;color:var(--ink);margin-bottom:5px}.issue-picker-card p{font-size:13px;color:var(--gray);margin-bottom:20px}
+.issue-picker-close{position:absolute;right:15px;top:13px;width:34px;height:34px;border:1px solid var(--border);border-radius:50%;background:#fff;color:var(--red);font-size:23px;cursor:pointer}
+.issue-date-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.issue-date{min-height:73px;border:1px solid var(--border);border-radius:9px;background:var(--bg2);font-family:'Noto Sans Devanagari',sans-serif;text-align:center;padding:7px 4px;color:var(--gray);font-size:12px}
+.issue-date strong{display:block;font-size:18px;line-height:1.1;color:var(--ink)}
+.issue-date small{display:block;margin-top:3px;font-size:10px}.issue-date.available{cursor:pointer;background:#fff;border-color:rgba(192,22,28,.45);color:var(--red);box-shadow:var(--sh-sm)}
+.issue-date.available strong{color:var(--red)}.issue-date.available:hover{background:var(--red);color:#fff;border-color:var(--red)}.issue-date.available:hover strong{color:#fff}
 .rtools{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .rt{
   background:var(--bg2);color:var(--gray);border:1px solid var(--border);
@@ -221,15 +229,15 @@ body{
 .zlbl{font-size:12px;color:var(--gray);min-width:40px;text-align:center;font-weight:600}
 .stage{
   height:calc(100vh - var(--nav-h) - 54px);overflow:auto;
-  display:flex;align-items:flex-start;justify-content:center;
+  display:block;
   padding:22px 14px 36px;cursor:grab;background:var(--bg3);
 }
 .stage:active{cursor:grabbing}
 .pslide{display:none}
-.pslide.active{display:flex;align-items:flex-start;justify-content:center;animation:slideIn .3s ease;width:100%}
+.pslide.active{display:flex;align-items:flex-start;justify-content:center;animation:slideIn .3s ease;width:max-content;min-width:100%}
 @keyframes slideIn{from{opacity:0;transform:scale(.97) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .nwrap{
-  transform-origin:top center;transition:transform .2s ease;
+  transition:width .2s ease;
   box-shadow:0 8px 48px rgba(0,0,0,.22);border-radius:3px;overflow:hidden;
   line-height:0;position:relative;border:1px solid var(--border);
 }
@@ -308,12 +316,13 @@ body{
 .vc-icon{font-size:28px;margin-bottom:12px;display:block}
 .vc h3{font-family:'Noto Sans Devanagari',sans-serif;font-size:14.5px;font-weight:700;color:var(--red);margin-bottom:7px}
 .vc p{font-size:12.5px;color:var(--gray);line-height:1.75;font-family:'Noto Sans Devanagari',sans-serif}
-.team-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.team-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
 .tc{text-align:center;padding:20px 12px;background:#fff;border:1.5px solid var(--border);border-radius:10px;transition:all .2s;box-shadow:var(--sh-sm)}
 .tc:hover{border-color:var(--red);box-shadow:0 6px 18px rgba(192,22,28,.1)}
 .ta{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--red-light),var(--red-mid));margin:0 auto 11px;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid rgba(192,22,28,.18)}
 .tn{font-size:12.5px;font-weight:700;color:var(--ink);font-family:'Noto Sans Devanagari',sans-serif}
 .tr{font-size:11px;color:var(--gold);margin-top:3px;font-weight:500}
+.tphone{font-size:12px;color:var(--gray);margin-top:5px;font-family:'Mukta',sans-serif}
 .contact-row{grid-column:1/-1;background:linear-gradient(135deg,var(--red-light),#fff);border:1px solid rgba(192,22,28,.18);border-radius:12px;padding:28px;display:flex;justify-content:space-around;flex-wrap:wrap;gap:18px;letter-spacing: normal;}
 .ci{text-align:center}
 .ci-icon{font-size:25px;margin-bottom:7px}
@@ -364,7 +373,7 @@ body{
   .ab-vals{grid-template-columns:1fr 1fr}
   .team-grid{grid-template-columns:repeat(2,1fr)}
   .pdf-grid{grid-template-columns:repeat(2,1fr);padding:24px 12px}
-  .archive-grid{grid-template-columns:repeat(2,1fr)}
+  .issue-date-grid{grid-template-columns:repeat(3,1fr)}
   .info-strip{flex-wrap:wrap}
   .ii{min-width:44%;border-right:none;border-bottom:1px solid var(--border)}
   .nwrap img{width:96vw}
@@ -376,11 +385,11 @@ body{
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <a class="brand" onclick="showView('home')">
+  <a class="brand" onclick="showTodayEdition()">
     <img src="logo.png" alt="दैनिक सूर्यप्रभा" class="nav-logo">
   </a>
   <div class="nav-links" id="navLinks">
-    <button class="nl active" id="nl-home" onclick="showView('home')">
+    <button class="nl active" id="nl-home" onclick="showTodayEdition()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       मुखपृष्ठ
     </button>
@@ -434,12 +443,6 @@ body{
     <div class="ii"><span class="n">बीड</span><span class="l">मुख्यालय</span></div>
   </div>
 
-  <section class="archive-section" id="archiveSection" hidden>
-    <h2>मागील अंक</h2>
-    <p>मागील १ महिन्यातील दैनिक सूर्यप्रभा अंक</p>
-    <div class="archive-grid" id="archiveGrid"></div>
-  </section>
-
   <footer class="footer">
     <div class="footer-logowrap">
       <img src="logo.png" alt="दैनिक सूर्यप्रभा" class="footer-logo-img">
@@ -459,6 +462,7 @@ body{
 <div class="view" id="readerView">
   <div class="reader-bar">
     <div class="ptabs" id="ptabs"></div>
+    <button class="previous-editions-btn" type="button" onclick="openPreviousIssues()">मागील अंक वाचा</button>
     <div class="rtools">
       <button class="rt" onclick="rz(-0.25)">−</button>
       <span class="zlbl" id="zlbl">100%</span>
@@ -471,6 +475,14 @@ body{
   <button class="arrow off" id="bPrev" onclick="rGo(rp-1)">‹</button>
   <button class="arrow" id="bNext" onclick="rGo(rp+1)">›</button>
   <div class="pill" id="pill"></div>
+  <div class="issue-picker" id="issuePicker" hidden role="dialog" aria-modal="true" aria-labelledby="issuePickerTitle">
+    <div class="issue-picker-card">
+      <button class="issue-picker-close" type="button" aria-label="बंद करा" onclick="closeIssuePicker()">×</button>
+      <h2 id="issuePickerTitle">मागील अंक वाचा</h2>
+      <p>दिनांक निवडा · उपलब्ध अंक लाल रंगात दर्शविले आहेत.</p>
+      <div class="issue-date-grid" id="issueDateGrid"></div>
+    </div>
+  </div>
 </div>
 
 <!-- ABOUT -->
@@ -493,7 +505,7 @@ body{
       <h2>आमचे ध्येय</h2>
       <p>प्रत्येक नागरिकापर्यंत सत्य, संतुलित आणि सखोल बातम्या पोहोचवणे हे आमचे प्रमुख ध्येय आहे.</p>
       <p>लोकशाहीच्या चौथ्या स्तंभाची जबाबदारी पार पाडताना आम्ही सदैव निर्भय, निष्पक्ष आणि जनाभिमुख भूमिका घेतो.</p>
-      <p>ई-पेपर: www.lokprashna.com<br>Eportal: www.live.lokprashna.com</p>
+      <p>ई-पेपर: www.suryaprabhanews.com</p>
     </div>
     <div class="ab-vals">
       <div class="vc"><span class="vc-icon">📰</span><h3>निष्पक्ष पत्रकारिता</h3><p>कोणत्याही राजकीय दबावाशिवाय सत्य बातम्या देण्याची आमची बांधिलकी आहे.</p></div>
@@ -501,16 +513,14 @@ body{
       <div class="vc"><span class="vc-icon">🏛️</span><h3>लोकशाही रक्षण</h3><p>लोकशाहीच्या मूल्यांचे रक्षण करत नागरिकांना सजग ठेवणे हे आमचे कर्तव्य आहे.</p></div>
     </div>
     <div class="team-grid">
-      <div class="tc"><div class="ta">✍️</div><div class="tn">दिलीप मधुकर खिस्ती</div><div class="tr">मुद्रक व संपादक</div></div>
-      <div class="tc"><div class="ta">📸</div><div class="tn">छायाचित्रकार</div><div class="tr">फोटो विभाग</div></div>
-      <div class="tc"><div class="ta">🖊️</div><div class="tn">वार्ताहर दल</div><div class="tr">बातमीदार</div></div>
-      <div class="tc"><div class="ta">📱</div><div class="tn">डिजिटल टीम</div><div class="tr">ऑनलाइन विभाग</div></div>
+      <div class="tc"><div class="ta">✍️</div><div class="tn">मुद्रक व संपादक</div><div class="tr">दिलीप मधुकर खिस्ती</div><div class="tphone">9422242790</div></div>
+      <div class="tc"><div class="ta">📣</div><div class="tn">जाहिरात विभाग</div><div class="tr">दिपक सर्वज्ञ</div><div class="tphone">9822110170</div></div>
     </div>
     <div class="contact-row">
       <div class="ci"><div class="ci-icon">📍</div><div class="ci-lbl">पत्ता</div><div class="ci-val">बीड जि.बी.–४३११२२, महाराष्ट्र</div></div>
       <div class="ci"><div class="ci-icon">📞</div><div class="ci-lbl">संपर्क</div><div class="ci-val">०२४४२–२३२१८९ / २२९८९०</div></div>
-      <div class="ci"><div class="ci-icon">📧</div><div class="ci-lbl">ईमेल</div><div class="ci-val">beedlokprashna@gmail.com</div></div>
-      <div class="ci"><div class="ci-icon">🌐</div><div class="ci-lbl">वेबसाइट</div><div class="ci-val">www.lokprashna.com</div></div>
+      <div class="ci"><div class="ci-icon">📧</div><div class="ci-lbl">ईमेल</div><div class="ci-val">suryaprabhabeed@gmail.com</div></div>
+      <div class="ci"><div class="ci-icon">🌐</div><div class="ci-lbl">वेबसाइट</div><div class="ci-val">www.suryaprabhanews.com</div></div>
     </div>
   </div>
   <footer class="footer">
@@ -563,7 +573,9 @@ function indianToday() {
 
 function applyIssueDetails(issue) {
   const dateText = indianToday();
-  document.getElementById('navDate').innerHTML = `<strong>${dateText.split(',')[0] || dateText}</strong>${dateText}`;
+  const [weekday, ...dateParts] = dateText.split(',');
+  const calendarDate = dateParts.join(',').trim();
+  document.getElementById('navDate').innerHTML = `<strong>${weekday}</strong>${calendarDate ? ` ${calendarDate}` : ''}`;
   document.getElementById('heroIssue').innerHTML = `महाराष्ट्राचा विश्वासू आवाज &nbsp;·&nbsp; <strong>${dateText}</strong>${issue.edition ? ` &nbsp;·&nbsp; ${issue.edition}` : ''}`;
   document.getElementById('pdfIssue').textContent = `${dateText}${issue.edition ? ' · ' + issue.edition : ''} · पाने ${PAGES.length}`;
 }
@@ -575,7 +587,6 @@ function renderIssue() {
   document.getElementById('pdfGrid').innerHTML = '';
   rp = 1; rs = 1;
   applyIssueDetails(currentIssue);
-  renderArchive();
 
 // Home grid
 const hg = document.getElementById('homeGrid');
@@ -633,26 +644,53 @@ PAGES.forEach((p,i) => {
 });
 }
 
-function renderArchive() {
-  const section = document.getElementById('archiveSection');
-  const grid = document.getElementById('archiveGrid');
-  const olderIssues = availableIssues.filter(issue => issue.date !== currentIssue.date).slice(0, 30);
-  grid.innerHTML = '';
-  section.hidden = olderIssues.length === 0;
-  olderIssues.forEach(issue => {
-    const card = document.createElement('button');
-    card.type = 'button'; card.className = 'archive-card';
-    card.innerHTML = `<img src="${issue.pages[0].image}" alt="${issue.title || 'दैनिक सूर्यप्रभा'}"><div class="archive-date">${new Intl.DateTimeFormat('mr-IN',{timeZone:'Asia/Kolkata',day:'numeric',month:'long',year:'numeric'}).format(new Date(issue.date+'T12:00:00'))}</div>`;
-    card.onclick = () => openIssue(issue);
-    grid.appendChild(card);
-  });
-}
-
 function openIssue(issue) {
   currentIssue = issue;
   PAGES = issue.pages.map((page, index) => ({ num: page.number || String(index + 1), lbl: page.label || `पान ${index + 1}`, img: page.image }));
   renderIssue();
   showView('reader');
+}
+
+function showTodayEdition() {
+  // Prefer today's India-time edition. If it has not been published yet,
+  // use the newest available edition instead.
+  const todayIssue = availableIssues.find(issue => issue.date === indianDateKey(0)) || availableIssues[0];
+  if (todayIssue) {
+    currentIssue = todayIssue;
+    PAGES = todayIssue.pages.map((page, index) => ({ num: page.number || String(index + 1), lbl: page.label || `पान ${index + 1}`, img: page.image }));
+    renderIssue();
+  }
+  showView('home');
+}
+
+function indianDateKey(daysAgo) {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone:'Asia/Kolkata', year:'numeric', month:'numeric', day:'numeric' }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.filter(part => ['year','month','day'].includes(part.type)).map(part => [part.type, Number(part.value)]));
+  const date = new Date(Date.UTC(values.year, values.month - 1, values.day - daysAgo));
+  return date.toISOString().slice(0, 10);
+}
+
+function openPreviousIssues() {
+  const grid = document.getElementById('issueDateGrid');
+  const issuesByDate = new Map(availableIssues.map(issue => [issue.date, issue]));
+  grid.innerHTML = '';
+  for (let daysAgo = 0; daysAgo < 30; daysAgo++) {
+    const dateKey = indianDateKey(daysAgo);
+    const date = new Date(dateKey + 'T12:00:00');
+    const issue = issuesByDate.get(dateKey);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'issue-date' + (issue ? ' available' : '');
+    button.disabled = !issue;
+    button.innerHTML = `<strong>${new Intl.DateTimeFormat('mr-IN',{day:'numeric',timeZone:'Asia/Kolkata'}).format(date)}</strong><span>${new Intl.DateTimeFormat('mr-IN',{month:'short',timeZone:'Asia/Kolkata'}).format(date)}</span><small>${issue ? 'अंक वाचा' : 'उपलब्ध नाही'}</small>`;
+    if (issue) button.onclick = () => { closeIssuePicker(); openIssue(issue); };
+    grid.appendChild(button);
+  }
+  document.getElementById('issuePicker').hidden = false;
+}
+
+function closeIssuePicker() {
+  document.getElementById('issuePicker').hidden = true;
 }
 
 // Reader state
@@ -666,7 +704,9 @@ function rGo(n) {
   const tab = document.getElementById('t'+n);
   tab.classList.add('active');
   tab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
-  document.getElementById('stage').scrollTop = 0;
+  const stage = document.getElementById('stage');
+  stage.scrollTop = 0;
+  stage.scrollLeft = 0;
   applyS();
   document.getElementById('bPrev').classList.toggle('off', n===1);
   document.getElementById('bNext').classList.toggle('off', n===PAGES.length);
@@ -679,7 +719,30 @@ function showPill() {
   pt = setTimeout(() => pl.classList.add('hide'), 2800);
 }
 function rz(d) { rs = d===0 ? 1.0 : Math.min(3, Math.max(0.4, rs+d)); document.getElementById('zlbl').textContent = Math.round(rs*100)+'%'; applyS(); }
-function applyS() { const w = document.getElementById('w'+rp); if(w) w.style.transform = 'scale('+rs+')'; }
+function applyS() {
+  const w = document.getElementById('w'+rp);
+  const image = w?.querySelector('img');
+  if (!w || !image) return;
+
+  // CSS transforms do not enlarge the scrollable area, which made the left
+  // edge unreachable after zooming. Resize the page in normal layout instead.
+  const previousScale = Number(w.dataset.scale || 1);
+  if (!w.dataset.baseWidth || rs === 1) {
+    w.dataset.baseWidth = String(Math.round(w.getBoundingClientRect().width / previousScale));
+  }
+  const baseWidth = Number(w.dataset.baseWidth);
+  w.dataset.scale = String(rs);
+
+  if (rs === 1) {
+    w.style.width = '';
+    image.style.width = '';
+    image.style.maxWidth = '';
+    return;
+  }
+  w.style.width = `${baseWidth * rs}px`;
+  image.style.width = '100%';
+  image.style.maxWidth = 'none';
+}
 let zt = false;
 function toggleZ() { zt=!zt; rs=zt?2.0:1.0; document.getElementById('zlbl').textContent=Math.round(rs*100)+'%'; applyS(); }
 function toggleFS() { if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
@@ -709,15 +772,6 @@ document.addEventListener('keydown', e => {
   if(e.key==='-') rz(-0.25);
   if(e.key==='0') rz(0);
 });
-
-// Touch swipe
-let tx=0;
-document.addEventListener('touchstart', e => { tx=e.touches[0].clientX; }, {passive:true});
-document.addEventListener('touchend', e => {
-  if(cv!=='reader') return;
-  const d = e.changedTouches[0].clientX - tx;
-  if(Math.abs(d)>55) d<0 ? rGo(rp+1) : rGo(rp-1);
-}, {passive:true});
 
 // Pinch zoom
 let pd2=0;
